@@ -1,0 +1,79 @@
+struct Doublylinkedlist{
+    int size=0;
+    struct node{
+        node* next;
+        node* prev;
+        int val;
+    };
+
+    node* Head=NULL;
+    node* Tail=NULL;
+
+    void InsertFirst(int x){
+        size++;
+        node* p = (node*)malloc(sizeof(node));
+        p->val=x;
+        p->next=NULL;
+        p->prev=NULL;
+        if(Head==NULL){
+            Head=p;
+            Tail=p;
+        }else{
+            p->next=Head;
+            Head->prev=p;
+            Head=p;
+            p->prev=NULL;
+        }
+    }
+    void InsertLast(int x){
+        size++;
+        node* p = (node*)malloc(sizeof(node));
+        p->val=x;
+        p->next=NULL;
+        p->prev=NULL;
+        if(Tail==NULL){
+            Head=p;
+            Tail=p;
+        }else{
+            p->prev=Tail;
+            Tail->next=p;
+            Tail=p;
+            p->next=NULL;
+        }
+    }
+    void DeleteFirst(){
+        size--;
+        if(Head==NULL){
+            return;
+        }else if(Head==Tail){
+            Head=Tail=NULL;
+        }else{
+            Head=Head->next;
+            Head->prev=NULL;
+        }
+    }
+    void DeleteLast(){
+        size--;
+        if(Tail==NULL){
+            return;
+        }else if(Head==Tail){
+            Head=Tail=NULL;
+        }else{
+            Tail=Tail->prev;
+            Tail->next=NULL;
+        }
+    }
+
+    void print(){
+        node* p=Head;
+        while(p!=NULL){
+            cout<<p->val<<" ";
+            p=p->next;
+        }
+        cout<<endl;
+    }
+
+    int SIZE(){
+        return size;
+    }
+};
