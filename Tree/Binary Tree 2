@@ -1,0 +1,91 @@
+struct BinaryTree{
+    struct node{
+        int val;
+        node* left;
+        node* right;
+    };
+    node* root=NULL;
+
+    void rootdeclare(int x) {
+        root=CreateNode(x);
+    }
+
+    node* CreateNode(int x){
+        node* newnode=(node*)malloc(sizeof(node));
+        newnode->val=x;
+        newnode->left=NULL;
+        newnode->right=NULL;
+        return newnode;
+    }
+
+    node* FindNode(node* parent, int x) {
+        if (parent==NULL) return NULL; 
+        if (parent->val==x) return parent;
+        node* f=FindNode(parent->left,x);
+        if (f!=NULL) return f;
+        return FindNode(parent->right,x);
+    }
+
+    void InsertValue(int type, int par, int x){
+        node* rt=FindNode(root,par);
+        if(type==0){
+            if(rt->left==NULL){
+                rt->left=CreateNode(x);
+                return;
+            }
+        }else{
+            if(rt->right==NULL){
+                rt->right=CreateNode(x);
+                return;
+            }
+        }
+    }
+
+    void BFS() {
+        if (root==NULL) return;
+        queue<node*> q;
+        q.push(root);
+        while (!q.empty()) {
+            node* node=q.front();
+            q.pop(); 
+            cout <<node->val<< " ";
+            if(node->left!=NULL) q.push(node->left);
+            if(node->right!=NULL) q.push(node->right);
+        }
+        cout<<endl;
+    }
+
+    void inOrderDFS(node* node) {
+        if(node==NULL) return;
+        inOrderDFS(node->left);
+        cout<<node->val<<" ";
+        inOrderDFS(node->right);
+    }
+
+    void preOrderDFS(node* node) {
+        if(node==NULL) return;
+        cout<<node->val<<" ";
+        preOrderDFS(node->left);
+        preOrderDFS(node->right);
+    }
+
+    void postOrderDFS(node* node) {
+        if(node==NULL) return;
+        postOrderDFS(node->left);
+        postOrderDFS(node->right);
+        cout<<node->val<<" ";
+    }
+
+    void post_order_traversal(){
+        postOrderDFS(root);
+        cout<<endl;
+    }
+    void in_order_traversal(){
+        inOrderDFS(root);
+        cout<<endl;
+    }
+    void pre_order_traversal(){
+        preOrderDFS(root);
+        cout<<endl;
+    }
+};
