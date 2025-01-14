@@ -6,6 +6,7 @@ struct MinHeap{
     int par(int node){return (node-1)/2;}
     int leftchild(int node){return (2*node+1);}
     int rightchild(int node){return (2*node+2);}
+    int SIZE(){return last_index+1;}
 
     void xorSwap(int a[],int i,int j){
         a[i]=a[i]^a[j];
