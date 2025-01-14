@@ -1,0 +1,61 @@
+struct MinHeap{
+    static const int MAXN=5e5;
+    int a[MAXN]={0};
+    int last_index=-1;
+
+    int par(int node){return (node-1)/2;}
+    int leftchild(int node){return (2*node+1);}
+    int rightchild(int node){return (2*node+2);}
+
+    void xorSwap(int a[],int i,int j){
+        a[i]=a[i]^a[j];
+        a[j]=a[i]^a[j];
+        a[i]=a[i]^a[j];
+    }
+
+    void insert(int val){
+        a[++last_index]=val;
+        int i=last_index;
+        while(i>0 && a[par(i)]>a[i]){
+            xorSwap(a,i,par(i));
+            i=par(i);
+        }
+    }
+
+    int getmin(){
+        if(last_index==-1) return -1;
+        return a[0];
+    }
+
+
+    int extract_min(){
+        if(last_index==-1) return -1;
+        int ans=a[0];
+        a[0]=a[last_index--];
+        int node=0;
+        while(true){
+            int smallest=node;
+            if(leftchild(node)<=last_index && a[leftchild(node)]<a[node]){
+                smallest=leftchild(node);
+            }
+
+            if(rightchild(node)<=last_index && a[rightchild(node)]<a[node]){
+                smallest=rightchild(node);
+            }
+
+            if(smallest!=node){
+                xorSwap(a,node,smallest);
+                node=smallest;
+            }else break;
+        }
+
+        return ans;
+    }
+
+    void printheap(){
+        for(int i=0;i<=last_index;i++){
+            cout<<a[i]<<" ";
+        }
+        cout<<endl;
+    }
+};
