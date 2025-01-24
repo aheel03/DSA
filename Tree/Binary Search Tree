@@ -1,0 +1,110 @@
+struct BST{
+    struct node{
+        int value;
+        node* left;
+        node* right;
+    };
+
+    node* root=NULL;
+
+    node* CreateNewNode(int val){
+        node* newnode = (node*)malloc(sizeof(node));
+        newnode->value=val;
+        newnode->left=NULL;
+        newnode->right=NULL;
+        return newnode;
+    }
+    
+
+    void Insert(int val,node* parent=NULL){
+        node* newnode = CreateNewNode(val);
+        if(root==NULL){
+            root=newnode;
+            return;
+        }
+
+        if(parent==NULL) parent=root;
+
+        if(val<=parent->value){
+            if(parent->left==NULL) {
+                parent->left=newnode;
+                return;
+            }else{
+                Insert(val, parent->left);
+            }
+        }else{
+            if(parent->right==NULL){
+                parent->right=newnode;
+            }else{
+                Insert(val, parent->right);
+            }
+        }
+    }
+
+    bool Search(int val, node* parent = NULL) {
+        if(root==NULL) return false;
+        if(parent==NULL) parent=root;
+
+        if(parent->value==val) {
+            return true;
+        }else if(val<parent->value) {
+            if(parent->left==NULL) {
+                return false;
+            }else{
+                return Search(val, parent->left);
+            }
+        }else{
+            if(parent->right==NULL) {
+                return false;
+            }else{
+                return Search(val, parent->right);
+            }
+        }
+    }
+
+    void Delete(int val, node*& parent) {
+        if(parent==NULL) return;
+
+        if(val<parent->value){
+            Delete(val, parent->left);
+        }else if(val>parent->value){
+            Delete(val, parent->right);
+        }else{
+            if(parent->left==NULL && parent->right==NULL) {
+                free(parent);
+                parent = NULL;
+            }else if(parent->left==NULL){
+                node* temp=parent;
+                parent=parent->right;
+                free(temp);
+            }else if(parent->right==NULL){
+                node* temp=parent;
+                parent=parent->left;
+                free(temp);
+            }else{
+                node* successor=parent->right;
+                while (successor->left!=NULL) {
+                    successor=successor->left;
+                }
+                parent->value=successor->value;
+                Delete(successor->value, parent->right);
+            }
+        }
+    }
+
+    void DeleteValue(int val){
+        Delete(val,root);
+    }
+
+    void preOrderDFS(node* node) {
+        if(node==NULL) return;
+        cout<<node->value<<" ";
+        preOrderDFS(node->left);
+        preOrderDFS(node->right);
+    }
+
+    void pre_order_traversal(){
+        preOrderDFS(root);
+        cout<<endl;
+    }
+};
