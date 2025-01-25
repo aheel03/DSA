@@ -1,0 +1,39 @@
+struct pr{
+    int a;
+    int b;
+};
+
+void merge(pr a[],int l1,int r1,int l2,int r2){
+    int n=(r1-l1+1)+(r2-l2+1);
+    int ptr1=l1;
+    int ptr2=l2;
+    pr temp[n];
+    int idx=0;
+    while(ptr1<=r1 && ptr2<=r2){
+        if(a[ptr1].a<a[ptr2].a || ((a[ptr1].a==a[ptr2].a) && (a[ptr1].b<=a[ptr2].b))){
+            temp[idx++]=a[ptr1++];
+        }else{
+            temp[idx++]=a[ptr2++];
+        }
+    }
+    while(ptr1<=r1){
+        temp[idx++]=a[ptr1++];
+    }
+    while(ptr2<=r2){
+        temp[idx++]=a[ptr2++];
+    }
+
+    for(int i=0;i<n;i++){
+        a[l1+i]=temp[i];
+    }
+}
+
+void mergesort(pr a[],int l,int r){
+    if(l>=r){
+        return;
+    }
+    int mid=(l+r)/2;
+    mergesort(a,l,mid);
+    mergesort(a,mid+1,r);
+    merge(a,l,mid,mid+1,r);
+}
