@@ -1,0 +1,42 @@
+int const N=2e5;
+vector<int> par(N,-1);
+vector<int> nodesize(N,0);
+vector<int> noderank(N,0);
+
+void make_set(int node){
+    par[node]=node;
+    noderank[node]=0;
+    nodesize[node]=1;
+}
+
+int find_set(int node){
+    while(par[node]!=node){
+        node=par[node];
+    }
+    return node;
+}
+
+void union_by_size(int a, int b){
+    a=find_set(a);
+    b=find_set(b);
+    if(a==b) return;
+    if(nodesize[a]>nodesize[b]){
+        par[b]=a;
+        nodesize[a]+=nodesize[b];
+    }else{
+        par[a]=b;
+        nodesize[b]+=nodesize[a];
+    }
+}
+
+void union_by_rank(int a, int b){
+    a=find_set(a);
+    b=find_set(b);
+    if(a==b) return;
+    if(noderank[a]>noderank[b]) par[b]=a;
+    else if(noderank[b]>noderank[a]) par[a]=b;
+    else{
+        par[a]=b;
+        noderank[b]++;
+    }
+}
