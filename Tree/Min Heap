@@ -36,11 +36,11 @@ struct MinHeap{
         int node=0;
         while(true){
             int smallest=node;
-            if(leftchild(node)<=last_index && a[leftchild(node)]<a[node]){
+            if(leftchild(node)<=last_index && a[leftchild(node)]<a[smallest]){
                 smallest=leftchild(node);
             }
 
-            if(rightchild(node)<=last_index && a[rightchild(node)]<a[node]){
+            if(rightchild(node)<=last_index && a[rightchild(node)]<a[smallest]){
                 smallest=rightchild(node);
             }
 
