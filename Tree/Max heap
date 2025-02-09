@@ -5,7 +5,7 @@ struct MaxHeap{
 
     int par(int node){return (node-1)/2;}
     int leftchild(int node){return (2*node+1);}
-    int rightchild(int node){return (2*node+2);}|
+    int rightchild(int node){return (2*node+2);}
     int SIZE(){return last_index+1;}
 
     void xorSwap(int a[],int i,int j){
@@ -36,11 +36,11 @@ struct MaxHeap{
         int node=0;
         while(true){
             int largest=node;
-            if(leftchild(node)<=last_index && a[leftchild(node)]>a[node]){
+            if(leftchild(node)<=last_index && a[leftchild(node)]>a[largest]){
                 largest=leftchild(node);
             }
 
-            if(rightchild(node)<=last_index && a[rightchild(node)]>a[node]){
+            if(rightchild(node)<=last_index && a[rightchild(node)]>a[largest]){
                 largest=rightchild(node);
             }
 
@@ -49,7 +49,6 @@ struct MaxHeap{
                 node=largest;
             }else break;
         }
-
         return ans;
     }
 
