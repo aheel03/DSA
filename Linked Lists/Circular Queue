@@ -1,0 +1,34 @@
+struct CircQ{
+    static const int n=100;
+    int a[n];
+    int front=0;
+    int rear=-1;
+    int size=0;
+
+    void insert(int val){
+        if(size==n) return;
+        if(size==0) front=0;
+        rear=(rear+1)%n;
+        a[rear]=val;
+        size++;
+    }
+
+    int pop(){
+        if(size==0) return -1;
+        int ret=a[front];
+        front=(front+1)%n;
+        size--;
+        return ret;
+    }
+
+    void display() {
+        if(size==0) {
+            cout<<"Queue is empty\n";
+            return;
+        }
+        for(int i=0;i<size;i++) {
+            cout<<a[(front+i)%n]<<" ";
+        }
+        cout<<"\n";
+    }
+};
